@@ -13,7 +13,6 @@ app = Starlette(
     }
 )
 
-# Add middleware (order matters - params first, then JSON)
 app.add_middleware(JSONValidationMiddleware)
 
 @app.on_event("startup")

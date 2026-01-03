@@ -17,10 +17,7 @@ routes = [
         
         Mount('/users', routes=[
             Route('/', UserController.store, methods=['POST']),
-            Route('/{user_name}', UserController.findOrStore, methods=['POST']),
-            #Route('/', UserController.store, methods=['POST']),
-            #Route('/', UserController.store, methods=['DELETE']),
-            #Route('/', UserController.store, methods=['PUT']),
+            Route('/{user_name}', UserController.findOrStore, methods=['POST'])
         ])
     ])
 ]

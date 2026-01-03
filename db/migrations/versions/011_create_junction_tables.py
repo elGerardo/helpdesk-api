@@ -1,8 +1,8 @@
 """create junction tables
 
-Revision ID: f1ced099f699
-Revises: 634eac1022e6
-Create Date: 2026-01-03 02:09:00.176852
+Revision ID: 011
+Revises: 010
+Create Date: 2026-01-03 00:00:11
 
 """
 from typing import Sequence, Union
@@ -12,44 +12,44 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'f1ced099f699'
-down_revision: Union[str, Sequence[str], None] = '634eac1022e6'
+revision: str = '011'
+down_revision: Union[str, Sequence[str], None] = '010'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
     """Create junction tables."""
-    # users_workspaces junction table
+    
+    # users_workspaces
     op.create_table(
         'users_workspaces',
         sa.Column('user_id', sa.BigInteger(), nullable=False),
         sa.Column('workspace_id', sa.BigInteger(), nullable=False),
-        sa.PrimaryKeyConstraint('user_id', 'workspace_id'),
-        sa.ForeignKeyConstraint(['user_id'], ['users.id']),
-        sa.ForeignKeyConstraint(['workspace_id'], ['workspaces.id'])
+        sa.Column('tenant_id', sa.BigInteger(), nullable=False),
+        sa.PrimaryKeyConstraint('user_id', 'workspace_id', 'tenant_id'),
+        sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='users_workspaces_user_id_foreign')
     )
     
-    # users_boards junction table
+    # users_boards
     op.create_table(
         'users_boards',
         sa.Column('user_id', sa.BigInteger(), nullable=False),
         sa.Column('workspace_id', sa.BigInteger(), nullable=False),
         sa.Column('board_id', sa.BigInteger(), nullable=False),
-        sa.PrimaryKeyConstraint('user_id', 'workspace_id', 'board_id'),
-        sa.ForeignKeyConstraint(['user_id'], ['users.id']),
-        sa.ForeignKeyConstraint(['workspace_id'], ['workspaces.id']),
-        sa.ForeignKeyConstraint(['board_id'], ['boards.id'])
+        sa.Column('tenant_id', sa.BigInteger(), nullable=False),
+        sa.PrimaryKeyConstraint('user_id', 'workspace_id', 'board_id', 'tenant_id'),
+        sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='users_boards_user_id_foreign')
     )
     
-    # ticket_responsibles junction table
+    # ticket_responsibles
     op.create_table(
         'ticket_responsibles',
         sa.Column('user_id', sa.BigInteger(), nullable=False),
         sa.Column('ticket_id', sa.BigInteger(), nullable=False),
-        sa.PrimaryKeyConstraint('user_id', 'ticket_id'),
-        sa.ForeignKeyConstraint(['user_id'], ['users.id']),
-        sa.ForeignKeyConstraint(['ticket_id'], ['tickets.id'])
+        sa.Column('tenant_id', sa.BigInteger(), nullable=False),
+        sa.PrimaryKeyConstraint('user_id', 'ticket_id', 'tenant_id'),
+        sa.ForeignKeyConstraint(['user_id'], ['users.id'], name='ticket_responsibles_user_id_foreign')
     )
 
 
