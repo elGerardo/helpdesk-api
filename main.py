@@ -1,6 +1,7 @@
 from starlette.applications import Starlette
 from app.routes.api import routes
 from app.http.exceptions.validation_exception import validation_handler
+from app.http.middleware.json_validation_middleware import JSONValidationMiddleware
 from pydantic import ValidationError
 from config import app
 
@@ -11,6 +12,9 @@ app = Starlette(
         ValidationError: validation_handler
     }
 )
+
+# Add middleware (order matters - params first, then JSON)
+app.add_middleware(JSONValidationMiddleware)
 
 @app.on_event("startup")
 async def startup():

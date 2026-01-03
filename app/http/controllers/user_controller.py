@@ -44,6 +44,6 @@ class UserController:
             }, status_code=500)
         
     async def findOrStore(request: Request) -> JSONResponse:
-        user_name = request.path_params.get('user_name')
+        user_name = request.path_params.get('user_name', None)
         result = await UserService.find_or_store(user_name)
         return created(result.model_dump())
