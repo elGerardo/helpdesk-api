@@ -1,0 +1,17 @@
+fastapi[standard]
+uvicorn
+starlette
+anyio
+sqlmodel
+alembic
+python-dotenv
+psycopg2-binary
+pydantic[email]
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+langchain
+langchain-openai
+openai
+pyjwt
+pwdlib[argon2]
