@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table(
         'tenants',
         sa.Column('id', sa.BigInteger(), nullable=False),
-        sa.Column('owner_id', sa.BigInteger(), nullable=False),
+        sa.Column('owner_id', sa.BigInteger(), nullable=True),
         sa.Column('title', sa.String(255), nullable=False),
         sa.Column('description', sa.String(255), nullable=True),
         sa.Column('created_at', sa.TIMESTAMP(), nullable=True),

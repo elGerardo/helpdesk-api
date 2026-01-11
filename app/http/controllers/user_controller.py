@@ -1,7 +1,5 @@
 from starlette.responses import JSONResponse
-from starlette.requests import Request 
-from config.database import get_session
-from app.models.user import User
+from starlette.requests import Request
 from app.http.dtos.users.store_user_dto import StoreUserDTO
 from pydantic import ValidationError
 from app.http.services.user_service import UserService
@@ -43,7 +41,7 @@ class UserController:
                 "message": str(e)
             }, status_code=500)
         
-    async def findOrStore(request: Request) -> JSONResponse:
+    async def find(request: Request) -> JSONResponse:
         user_name = request.path_params.get('user_name', None)
-        result = await UserService.find_or_store(user_name)
-        return created(result.model_dump())
+        result = await UserService.find(user_name)
+        return created(result)

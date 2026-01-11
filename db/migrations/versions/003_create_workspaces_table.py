@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table(
         'workspaces',
         sa.Column('id', sa.BigInteger(), nullable=False),
-        sa.Column('tenant_id', sa.BigInteger(), nullable=False),
+        sa.Column('tenant_id', sa.BigInteger(), nullable=True),
         sa.Column('name', sa.String(255), nullable=False),
         sa.Column('description', sa.String(255), nullable=True),
         sa.Column('logo', sa.String(255), nullable=True),

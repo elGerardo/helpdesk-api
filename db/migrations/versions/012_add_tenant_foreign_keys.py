@@ -19,13 +19,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    """Add circular foreign key constraints."""
-    # Add tenants owner foreign key
-    op.create_foreign_key(
-        'tenants_owner_id_foreign',
-        'tenants', 'users',
-        ['owner_id'], ['id']
-    )
+    """Add users tenant foreign key constraint."""
     # Add users tenant foreign key
     op.create_foreign_key(
         'users_tenant_id_foreign',
@@ -35,6 +29,5 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Drop circular foreign key constraints."""
+    """Drop users tenant foreign key constraint."""
     op.drop_constraint('users_tenant_id_foreign', 'users', type_='foreignkey')
-    op.drop_constraint('tenants_owner_id_foreign', 'tenants', type_='foreignkey')

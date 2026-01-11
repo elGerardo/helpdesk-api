@@ -29,6 +29,7 @@ def upgrade() -> None:
         sa.Column('user_name', sa.String(255), nullable=False),
         sa.Column('email', sa.String(255), nullable=False),
         sa.Column('password', sa.String(255), nullable=False),
+        sa.Column('profile_image', sa.String(255), nullable=True),
         sa.Column('created_at', sa.TIMESTAMP(), nullable=True),
         sa.Column('updated_at', sa.TIMESTAMP(), nullable=True),
         sa.Column('deleted_at', sa.TIMESTAMP(), nullable=True),
