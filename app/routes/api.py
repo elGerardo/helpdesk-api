@@ -4,6 +4,7 @@ from app.http.controllers.auth_controller import AuthController
 from app.http.controllers.user_controller import UserController
 from app.http.controllers.user_workspaces_controller import UserWorkspacesController
 from app.http.controllers.user_tickets_controller import UserTicketsController
+from app.http.controllers.user_notifications_controller import UserNotificationsController
 from app.http.middleware.authorization_middleware import AuthorizationMiddleware
 from starlette.middleware import Middleware
 from app.http.controllers.guest_controller import GuestController
@@ -18,6 +19,8 @@ routes = [
         Mount('/auth', routes=[
             Route('/login', AuthController.login, methods=['POST']),
             Route('/me', AuthController.me, methods=['GET'], middleware=[Middleware(AuthorizationMiddleware)]),
+            Route('/refresh', AuthController.refresh, methods=['POST'], middleware=[Middleware(AuthorizationMiddleware)]),
+            Route('/token-info', AuthController.token_info, methods=['GET'], middleware=[Middleware(AuthorizationMiddleware)]),
         ]),
 
         Mount('/guests', routes=[
@@ -30,6 +33,10 @@ routes = [
 
         Mount('/user-tickets', routes=[
             Route('/', UserTicketsController.index, methods=['GET']),
+        ], middleware=[Middleware(AuthorizationMiddleware)]),
+
+        Mount('/user-notifications', routes=[
+            Route('/', UserNotificationsController.index, methods=['GET']),
         ], middleware=[Middleware(AuthorizationMiddleware)]),
         
         Mount('/users', routes=[

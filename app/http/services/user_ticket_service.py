@@ -6,7 +6,7 @@ from app.utils.query import get
 
 
 class UserTicketService:
-    @staticmethod
+
     async def get_all(logged_user: User, session=None) -> list[Ticket]:
         query = (
             select(Ticket)

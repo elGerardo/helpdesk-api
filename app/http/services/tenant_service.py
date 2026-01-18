@@ -1,5 +1,4 @@
 from app.http.dtos.tenants.store_tenant_dto import StoreTenantDTO
-from app.models import tenant
 from app.models.tenant import Tenant
 from config.database import get_session
 

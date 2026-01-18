@@ -2,7 +2,6 @@ from app.http.dtos.workspaces.store_workspace_dto import StoreWorkspaceDTO
 from app.models.workspace import Workspace
 from config.database import get_session
 
-
 class WorkspaceService:
     @staticmethod
     async def store(dto: StoreWorkspaceDTO, session=None) -> Workspace:

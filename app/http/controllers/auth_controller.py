@@ -22,4 +22,26 @@ class AuthController:
     async def me(request: Request) -> JSONResponse:
         token = request.headers.get("Authorization")
         user = await AuthService.me(token)
-        return ok(user) 
+        return ok(user)
+
+    async def refresh(request: Request) -> JSONResponse:
+        token = request.headers.get("Authorization")
+        result = await AuthService.refresh(token)
+
+        if "error" in result:
+            return JSONResponse({
+                "error": result["error"]
+            }, status_code=401)
+
+        return ok(result)
+
+    async def token_info(request: Request) -> JSONResponse:
+        token = request.headers.get("Authorization")
+        result = await AuthService.token_info(token)
+
+        if "error" in result and "is_expired" not in result:
+            return JSONResponse({
+                "error": result["error"]
+            }, status_code=401)
+
+        return ok(result) 

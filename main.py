@@ -15,7 +15,6 @@ app = Starlette(
     }
 )
 
-
 app.add_middleware(JSONValidationMiddleware)
 app.add_middleware(
     CORSMiddleware,

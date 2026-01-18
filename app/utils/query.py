@@ -12,6 +12,8 @@ async def first_or_fail(session = None, query = None, error_message="Row not fou
     if not result:
         raise HTTPException(status_code=404, detail=error_message)
     
+    result = result.model_dump(mode='json')
+    
     return result
 
 async def get(session = None, query = None): 
@@ -23,6 +25,6 @@ async def get(session = None, query = None):
     
     result = session.exec(query).all()
 
-    result = [result.model_dump() for result in result]
+    result = [result.model_dump(mode='json') for result in result]
 
     return result
