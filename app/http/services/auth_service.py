@@ -3,6 +3,8 @@ from config.database import get_session
 from config.app import HASH
 from app.models.user import User
 from app.models.notification import Notification
+from app.models.workspace import Workspace
+from app.models.user_workspace import UserWorkspace
 from sqlmodel import select, or_
 import jwt
 from datetime import datetime, timedelta
@@ -65,9 +67,18 @@ class AuthService:
         notifications_query = select(Notification).where(Notification.deliveried_to == userId)
         notifications = await get(session=session, query=notifications_query)
 
+        # Get workspaces related to the user
+        workspaces_query = (
+            select(Workspace)
+            .join(UserWorkspace, UserWorkspace.workspace_id == Workspace.id)
+            .where(UserWorkspace.user_id == userId)
+        )
+        workspaces = await get(session=session, query=workspaces_query)
+
         return {
             "user": user,
-            "notifications": notifications
+            "notifications": notifications,
+            "workspaces": workspaces
         }
 
     async def refresh(token: str) -> dict:

@@ -24,7 +24,7 @@ def upgrade() -> None:
         'forms',
         sa.Column('id', sa.BigInteger(), nullable=False),
         sa.Column('tenant_id', sa.BigInteger(), nullable=False),
-        sa.Column('form_id', sa.BigInteger(), nullable=False),
+        sa.Column('form_id', sa.BigInteger(), nullable=True),
         sa.Column('board_id', sa.BigInteger(), nullable=False),
         sa.Column('title', sa.String(255), nullable=False),
         sa.Column('nomenclature', sa.String(255), nullable=False),

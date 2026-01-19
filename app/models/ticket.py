@@ -18,6 +18,7 @@ class Ticket(SQLModel, table=True):
     form_id: int = Field()
     requester_name: str = Field()
     requester_mail: Optional[str] = Field(default=None)
+    status: Optional[str] = Field(default=None)
     created_at: Optional[datetime] = Field(default=None)
     updated_at: Optional[datetime] = Field(default=None)
     deleted_at: Optional[datetime] = Field(default=None)
@@ -26,7 +27,6 @@ class Ticket(SQLModel, table=True):
     #user_links: Optional[list["TicketResponsible"]] = Relationship(
     #    back_populates="ticket")
     
-    # Direct many-to-many relationship to users
     users: Optional[list["User"]] = Relationship(
         back_populates="tickets",
         link_model=TicketResponsible

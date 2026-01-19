@@ -30,7 +30,7 @@ def upgrade() -> None:
         sa.Column('type', sa.String(255), nullable=False),
         sa.Column('created_at', sa.TIMESTAMP(), nullable=True),
         sa.Column('updated_at', sa.TIMESTAMP(), nullable=True),
-        sa.Column('deleted_at', sa.TIMESTAMP(), nullable=False),
+        sa.Column('deleted_at', sa.TIMESTAMP(), nullable=True),
         sa.PrimaryKeyConstraint('id'),
         sa.UniqueConstraint('slug', name='board_statuses_slug_unique'),
         sa.ForeignKeyConstraint(['tenant_id'], ['tenants.id'], name='board_statuses_tenant_id_foreign')
