@@ -27,7 +27,7 @@ def upgrade() -> None:
         sa.Column('form_id', sa.BigInteger(), nullable=True),
         sa.Column('ticket_id', sa.BigInteger(), nullable=True),
         sa.Column('label', sa.String(255), nullable=False),
-        sa.Column('placeholder', sa.BigInteger(), nullable=False),
+        sa.Column('placeholder', sa.String(255), nullable=False),
         sa.Column('type', sa.String(255), nullable=False),
         sa.Column('required', sa.Boolean(), nullable=False, server_default='false'),
         sa.Column('min', sa.BigInteger(), nullable=True),

@@ -15,7 +15,7 @@ class UserWorkspaceService:
             .where(UserWorkspace.tenant_id == logged_user.tenant_id)
         )
         
-        result = await get(None, query)
+        result = await get(query=query, fields_to_serialize=True)
 
         return result
 

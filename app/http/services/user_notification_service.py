@@ -11,6 +11,6 @@ class UserNotificationService:
             .where(Notification.deliveried_to == logged_user.id)
         )
         
-        result = await get(None, query)
+        result = await get(query=query, fields_to_serialize=True)
 
         return result

@@ -1,6 +1,9 @@
-from sqlmodel import Field, SQLModel
-from typing import Optional
+from sqlmodel import Field, SQLModel, Relationship
+from typing import Optional, TYPE_CHECKING
 from datetime import datetime
+
+if TYPE_CHECKING:
+    from app.models.ticket import Ticket
 
 class BoardStatus(SQLModel, table=True):
     __tablename__ = "board_statuses"
@@ -14,3 +17,6 @@ class BoardStatus(SQLModel, table=True):
     created_at: Optional[datetime] = Field(default=None)
     updated_at: Optional[datetime] = Field(default=None)
     deleted_at: Optional[datetime] = Field(default=None)
+    
+    # One-to-one relationship with Ticket
+    ticket: Optional["Ticket"] = Relationship(back_populates="board_status")

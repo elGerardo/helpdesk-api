@@ -65,7 +65,7 @@ class AuthService:
         user: User = await first_or_fail(session=session, query=user_query, error_message="User not found")
 
         notifications_query = select(Notification).where(Notification.deliveried_to == userId)
-        notifications = await get(session=session, query=notifications_query)
+        notifications = await get(session=session, query=notifications_query, fields_to_serialize=True)
 
         # Get workspaces related to the user
         workspaces_query = (
@@ -73,7 +73,7 @@ class AuthService:
             .join(UserWorkspace, UserWorkspace.workspace_id == Workspace.id)
             .where(UserWorkspace.user_id == userId)
         )
-        workspaces = await get(session=session, query=workspaces_query)
+        workspaces = await get(session=session, query=workspaces_query, fields_to_serialize=True)
 
         return {
             "user": user,

@@ -1,3 +1,4 @@
+from app.utils.serializer import Serializer
 from config.database import get_session
 from starlette.exceptions import HTTPException
 
@@ -16,7 +17,11 @@ async def first_or_fail(session = None, query = None, error_message="Row not fou
     
     return result
 
-async def get(session = None, query = None): 
+async def get(
+        session = None, 
+        query = None,
+        fields_to_serialize: list|bool = None
+    ):
     if session is None:
         session = next(get_session())
 
@@ -25,6 +30,9 @@ async def get(session = None, query = None):
     
     result = session.exec(query).all()
 
-    result = [result.model_dump(mode='json') for result in result]
+    if fields_to_serialize is not None:
+        if fields_to_serialize is True:
+            fields_to_serialize = []
+        result = Serializer.serialize(result, fields_to_serialize=fields_to_serialize)
 
     return result

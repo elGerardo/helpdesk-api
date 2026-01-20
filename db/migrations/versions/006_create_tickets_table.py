@@ -27,6 +27,8 @@ def upgrade() -> None:
         sa.Column('workspace_id', sa.BigInteger(), nullable=False),
         sa.Column('board_id', sa.BigInteger(), nullable=False),
         sa.Column('form_id', sa.BigInteger(), nullable=False),
+        sa.Column('title', sa.String(255), nullable=False),
+        sa.Column('description', sa.String(255), nullable=True),
         sa.Column('requester_name', sa.String(255), nullable=False),
         sa.Column('requester_mail', sa.String(255), nullable=True),
         sa.Column('created_at', sa.TIMESTAMP(), nullable=True),
