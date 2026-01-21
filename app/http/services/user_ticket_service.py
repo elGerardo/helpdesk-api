@@ -1,3 +1,4 @@
+from app.http.dtos.user_tickets.filter_user_tickets_dto import FilterUserTicketDto
 from app.models.user import User
 from app.models.ticket import Ticket
 from app.models.ticket_responsible import TicketResponsible
@@ -9,7 +10,7 @@ from app.utils.serializer import Serializer
 
 class UserTicketService:
 
-    async def get_all(logged_user: User, session=None) -> list[Ticket]:
+    async def get_all(logged_user: User, filters: FilterUserTicketDto, session=None) -> list[Ticket]:
         query = (
             select(Ticket)
             .join(TicketResponsible, Ticket.id == TicketResponsible.ticket_id)
@@ -20,7 +21,8 @@ class UserTicketService:
         
         result = await get(
             query=query, 
-            fields_to_serialize=['board_status']
+            fields_to_serialize=['board_status'],
+            pagination={'page': filters.page, 'limit': filters.limit},
         )
 #        result = Serializer.serialize(result, fields_to_serialize=['board_status'])
 

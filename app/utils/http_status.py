@@ -19,17 +19,17 @@ def _serialize_model(model: SQLModel) -> dict:
 def created(data: dict | SQLModel):
     if isinstance(data, SQLModel):
         data = _serialize_model(data)
-    return JSONResponse({"data": data}, status_code=201)
+    return JSONResponse(data, status_code=201)
 
 def updated(data: dict | SQLModel):
     if isinstance(data, SQLModel):
         data = _serialize_model(data)
-    return JSONResponse({"data": data}, status_code=202)
+    return JSONResponse(data, status_code=202)
 
 def ok(data: dict | SQLModel | list):
     if isinstance(data, SQLModel):
         data = _serialize_model(data)
-    return JSONResponse({"data": data}, status_code=200)
+    return JSONResponse(data, status_code=200)
 
 def deleted():
     return JSONResponse(status_code=204)
